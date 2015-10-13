@@ -1,6 +1,5 @@
 // var DontFUp = DontFUp || {};
 
-// Global Variables
 // Canvas no jQuery:
   // var canvas = LC.init(document.getElementsByClassName('literally')[0],
   //                         {imageURLPrefix: 'img',
@@ -13,6 +12,7 @@
   //                           LC.tools.Pan,
   //                           LC.tools.Eyedropper]
   //                         });
+
 // Canvas jQuery:
   var $canvas = LC.init(($('.literally').get(0)),
                           {imageURLPrefix: 'img',
@@ -26,21 +26,24 @@
                             LC.tools.Eyedropper]
                           });
   var $textBox = $('.textBox');
-  var $promptStart = $('#start-prompt');
   var games = null;
+  var $startButton = $('#gameStart');
+  var $share = $('#shareImages');
+  var $playAgain = $('#playAgain');
   // var paused = false;
 
 
 // Game Object Constructor - Factory
-var Game = function() {
-  var $players = $('.players').val();
-  var $roundTime = $('.set-timer').val();
+var Game = function(players, roundTime) {
   return {
-    players: $players,
-    roundTimer: $roundTime,
+    players: players || 4,
+    roundTimer: roundTime || 60,
     pauseTimer: 15,
     roundCounter: 0,
-    gameRounds: {},
+    gameRounds: [],
+    newRound: function(){
+      this.
+    }
   }
 }
 
@@ -54,12 +57,15 @@ var GameRound = function() {
   }
 }
 
-var button = document.querySelector('.button');
-button.addEventListener('click', function(){
-  console.log(newGame())
-});
 
 // Game Functions
+$startButton.click(function(){
+  $players = $('#numPlayers').val();
+  $roundTime = $('#roundLength').val();
+  $('#controls'.show());
+  console.log(newGame());
+});
+
 function newGame() {
   return Game()
 }
@@ -77,14 +83,16 @@ function halfRound() {
   roundCounter++;
   $('#roundCounter').text(roundCounter);
   if (roundCounter === 1){
-      
-  } else if (roundCounter === $players) {
+      $('#previousRound').hide;
+      $textBox.hide();
+  } else if (roundCounter > $players) {
       saveGame(this);
       return (alert('Game Over!'));
   } else if (roundCounter % 2 === 1) {
-
+      $textBox.hide();
       showCanvas();
   } else {
+      $textBox.show();
       removeCanvas();
   }
 }
@@ -111,16 +119,18 @@ function saveDescription() {
   return $textBox.text();
 }
 
-function roundTimer() {
-  var timeRemaining = this.roundTimer;
-  timeRemaining--;
+
+// Timer Functions
+function roundTimer(timeRemaining) {
+  console.log(timeRemaining);
+  timeRemaining -= 1;
   if (timeRemaining === 0) {
     endRound();
   }
 }
 
 function endRound() {
-  clearInterval(countdownRound);
+  window.clearInterval(countdownRound);
 }
 
 function pauseTimer() {
@@ -132,7 +142,7 @@ function pauseTimer() {
 }
 
 function endPause() {
-  clearInterval(countdownPause);
+  window.clearInterval(countdownPause);
 }
 
 
