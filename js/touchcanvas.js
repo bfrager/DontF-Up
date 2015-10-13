@@ -14,23 +14,23 @@
   //                         });
 
 // Canvas jQuery:
-  var $canvas = LC.init(($('.literally').get(0)),
-                          {imageURLPrefix: 'img',
-                          tools: [
-                            LC.tools.Pencil,
-                            LC.tools.Eraser,
-                            LC.tools.Line,
-                            LC.tools.Rectangle,
-                            LC.tools.Polygon,
-                            LC.tools.Pan,
-                            LC.tools.Eyedropper]
-                          });
-  var $textBox = $('.textBox');
-  var games = null;
-  var $startButton = $('#gameStart');
-  var $share = $('#shareImages');
-  var $playAgain = $('#playAgain');
-  // var paused = false;
+var $canvas = LC.init(($('.literally').get(0)),
+                        {imageURLPrefix: 'img',
+                        tools: [
+                          LC.tools.Pencil,
+                          LC.tools.Eraser,
+                          LC.tools.Line,
+                          LC.tools.Rectangle,
+                          LC.tools.Polygon,
+                          LC.tools.Pan,
+                          LC.tools.Eyedropper]
+                        });
+var $textBox = $('.textBox');
+var games = null;
+var $startButton = $('#gameStart');
+var $share = $('#shareImages');
+var $playAgain = $('#playAgain');
+// var paused = false;
 
 
 // Game Object Constructor - Factory
@@ -42,42 +42,39 @@ var Game = function(players, roundTime) {
     roundCounter: 0,
     gameRounds: [],
     newRound: function(){
-      this.
-    }
+      return {
+        round: roundCounter,
+        content: null,
+      }
+    },
+    saveRound: function(){
+      gameRounds.push(newRound);
+    },
   }
 }
-
-// Game Round Object Constructor
-var GameRound = function() {
-  return {
-    round: roundCounter,
-    drawing: roundDrawing,
-    canvas: roundCanvas,
-    description: roundDescription,
-  }
-}
-
 
 // Game Functions
 $startButton.click(function(){
   $players = $('#numPlayers').val();
   $roundTime = $('#roundLength').val();
   $('#controls'.show());
-  console.log(newGame());
+  var newGame = new Game();
+  console.log(newGame);
 });
 
-function newGame() {
-  return Game()
-}
+// DEPCRECATED FUNCTIONS DURING OBJECT-ORIENTED REFACTORING
+// function newGame() {
+//   return Game()
+// }
 
-function saveGame(currentGame) {
-  games.push(currentGame);
-}
-
-//Game Round Functions
-function newRound() {
-  new GameRound;
-}
+// //Game Round Functions
+// function newRound() {
+//   new GameRound;
+// }
+//
+// function saveGame(currentGame) {
+//   games.push(currentGame);
+// }
 
 function halfRound() {
   roundCounter++;
@@ -121,11 +118,14 @@ function saveDescription() {
 
 
 // Timer Functions
-function roundTimer(timeRemaining) {
-  console.log(timeRemaining);
-  timeRemaining -= 1;
-  if (timeRemaining === 0) {
+function roundTimer() {
+  var $timeRemaining = $('#timer').text() //replace with newGame.roundTime
+  $timeRemaining -= 1;
+  console.log($timeRemaining);
+  $('#timer').text($timeRemaining);
+  if ($timeRemaining === 0) {
     endRound();
+    pauseTimer();
   }
 }
 
@@ -134,17 +134,19 @@ function endRound() {
 }
 
 function pauseTimer() {
-  var timeRemaining = this.pauseTimer;
-  timeRemaining--;
-  if (timeRemaining === 0) {
+  var $pauseRemaining = $('#pause').text(); //replace with newGame.pauseTimer
+  $pauseRemaining -= 1;
+  console.log($pauseRemaining);
+  $('#pause').text($pauseRemaining);
+  if ($pauseRemaining === 0) {
     endPause();
+    roundTimer();
   }
 }
 
 function endPause() {
   window.clearInterval(countdownPause);
 }
-
 
 // Event Timers
 var countdownRound = window.setInterval(roundTimer, 1000);
