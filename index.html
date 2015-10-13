@@ -42,15 +42,26 @@
       <header>
         <h1>Don't F*** Up!</h1>
       </header>
-      <div id="canvas-title">
-        <h2>Draw Something! Draw Anything!</h2>
-      </div>
-      <div class="literally" id="canvas-container">
-        <!-- <canvas id="canvas"></canvas> -->
-      </div>
-      <div id="controls">
-        <div id="countdown">
-          <h2><span id="timer">60</span> seconds remaining.</h2>
+
+      <div id="game">
+        <div id="instructions">
+          <h2>Draw Something! Draw Anything!</h2>
+        </div>
+        <div id="previousRound">
+        </div>
+        <div id="currentRound">
+          <div class="literally" id="canvas-container">
+          </div>
+          <div class="textBox">
+          </div>
+        </div>
+        <div id="controls">
+          <div id="countdown">
+            <h2><span id="timer">60</span> seconds remaining.</h2>
+          </div>
+          <h2>Round <span id="roundCounter">1</span></h2>
+          <h3>(<span id="remaining">X</span> Rounds Remaining)</h3>
+          <button class="btn btn-large button" id="play-again">Play Again!</button>
         </div>
       </div>
       <footer>
@@ -59,12 +70,5 @@
     </div>
     <!-- Custom JS -->
     <script src="js/touchcanvas.js" charset="utf-8"></script>
-    <script>
-    <!-- Literally Canvas Init -->
-        LC.init(
-            document.getElementsByClassName('literally')[0],
-            {imageURLPrefix: 'img'}
-        );
-    </script>
   </body>
 </html>
