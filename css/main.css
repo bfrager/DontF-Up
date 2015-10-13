@@ -20,6 +20,15 @@ body {
 
 #container {
   max-width: 960px;
+  margin: 0 auto;
+}
+
+.canvas-container {
+
+}
+
+canvas {
+  background-color: #fff;
 }
 
 h1 {
@@ -36,12 +45,5 @@ span {
 }
 
 p {
-}
-
-canvas {
-  background-color: #fff;
-}
-
-.canvas-container {
 
 }
