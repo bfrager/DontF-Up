@@ -77,7 +77,7 @@ function halfRound() {
   roundCounter++;
   $('#roundCounter').text(roundCounter);
   if (roundCounter === 1){
-
+      
   } else if (roundCounter === $players) {
       saveGame(this);
       return (alert('Game Over!'));
