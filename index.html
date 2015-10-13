@@ -35,8 +35,6 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/react/0.14.0/react-with-addons.min.js"></script>
     <!-- Literally Canvas -->
     <script src="js/literallycanvas.js"></script>
-    <!-- Custom JS -->
-    <script src="js/touchcanvas.js" charset="utf-8"></script>
   </head>
 
   <body>
@@ -44,9 +42,11 @@
       <header>
         <h1>Don't F*** Up!</h1>
       </header>
-      <div class="literally without-jquery" id="canvas-container">
-        <canvas id="canvas">
-        </canvas>
+      <div id="canvas-title">
+        <h2>Draw Something! Draw Anything!</h2>
+      </div>
+      <div class="literally" id="canvas-container">
+        <!-- <canvas id="canvas"></canvas> -->
       </div>
       <div id="controls">
         <div id="countdown">
@@ -57,16 +57,14 @@
         <a href="https://github.com/bfrager/DontF-Up"><i class="fa fa-github fa-3x"></i></a>
       </footer>
     </div>
-
-    <!-- Literally Canvas Init -->
+    <!-- Custom JS -->
+    <script src="js/touchcanvas.js" charset="utf-8"></script>
     <script>
-        // Without jQuery!
+    <!-- Literally Canvas Init -->
         LC.init(
             document.getElementsByClassName('literally')[0],
             {imageURLPrefix: 'img'}
         );
     </script>
-
-
   </body>
 </html>
