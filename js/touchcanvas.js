@@ -30,6 +30,8 @@ var games = null;
 var $startButton = $('#gameStart');
 var $share = $('#shareImages');
 var $playAgain = $('#playAgain');
+var countdownPause = null;
+var countdownRound = null;
 // var paused = false;
 
 
@@ -67,12 +69,13 @@ var Game = function(players, roundTime) {
 };
 
 // Game Functions
-$startButton.click(function(){
+$startButton.submit(function(event){
+  event.preventDefault();
   $players = $('#numPlayers').val();
   $roundTime = $('#roundLength').val();
-  $('#controls'.show());
-  var newGame = new Game();
+  var newGame = new Game($players, $roundTime);
   console.log(newGame);
+  $('#controls').show();
 });
 
 
@@ -95,19 +98,25 @@ function saveCanvasToImage() {
 }
 
 function saveDescription() {
-  return $textBox.text();
+  return $('#description').val();
 }
 
 
 // Timer Functions
+// var timer = function() {}; //TIMER OBJECT?
+
+
 function roundTimer() {
   var $timeRemaining = $('#timer').text() //replace with newGame.roundTime
   $timeRemaining -= 1;
   console.log($timeRemaining);
   $('#timer').text($timeRemaining);
   if ($timeRemaining === 0) {
+    console.log('ending round')
     endRound();
     pauseTimer();
+    $('#timer').text('60');
+    countdownPause = window.setInterval(pauseTimer, 1000);
   }
 }
 
@@ -122,7 +131,9 @@ function pauseTimer() {
   $('#pause').text($pauseRemaining);
   if ($pauseRemaining === 0) {
     endPause();
-    roundTimer();
+    // roundTimer();
+    startRound();
+    $('#pause').text('15');
   }
 }
 
@@ -131,9 +142,11 @@ function endPause() {
 }
 
 // Event Timers
-var countdownRound = window.setInterval(roundTimer, 1000);
-var countdownPause = window.setInterval(pauseTimer, 1000);
+function startRound(){
+  countdownRound = window.setInterval(roundTimer, 1000);
+}
 
+startRound();
 
 // DEPCRECATED FUNCTIONS DURING OBJECT-ORIENTED REFACTORING
 // function newGame() {

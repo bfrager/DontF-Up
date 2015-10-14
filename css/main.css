@@ -11,6 +11,7 @@ green = #C7F464
 pink = #FF6B6B
 red = #C44D58
 */
+
 body {
   font-family: 'Quicksand', sans-serif;
   font-weight: 400;
@@ -101,4 +102,11 @@ input {
   height:200px;
   background: #ABB3BB;
   -webkit-box-reflect: below 0px -webkit-gradient(linear, left top, left bottom, from(transparent), color-stop(70%, transparent) , to(rgba(250, 250, 250, 0.1)));
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    /* display: none; <- Crashes Chrome on hover */
+    -webkit-appearance: none;
+    margin: 0; /* <-- Apparently some margin are still there even though it's hidden */
 }

@@ -53,30 +53,30 @@
           <div class="literally" id="canvas-container">
           </div>
           <div class="textBox">
-            <textarea placeholder="What the heck is it?"></textarea>
+            <textarea id="description" placeholder="What the heck is it?"></textarea>
           </div>
         </div>
         <div id="controls">
           <div id="countdown">
-            <h2><span id="timer">60</span> seconds left!</h2>
+            <h2><span id="timer">5</span> seconds left!</h2>
           </div>
           <h2>Round <span id="roundCounter">1</span></h2>
           <h3>(<span id="remaining">X</span> Rounds Remaining)</h3>
         </div>
         <div id="overlaysContainer">
-          <div class="overlay" id="gameStart">
+          <div class="" id="gameStart">
             <form id="parameters">
               <div class="form-group">
                 <h2>Number of Players:</h2>
-                <input type="number" class="form-control" id="numPlayers" min="1">
+                <input type="number" id="numPlayers" min="1">
               </div>
               <div class="form-group">
                 <h2>Round Length:</h2>
-                <input type="number"  class="form-control" id="roundLength" min="0">
+                <input type="number"  id="roundLength" min="0">
                 <h3>seconds</h3>
               </div>
             </form>
-            <button class="btn btn-lg button" type="button" id="gameStart" form="parameters" value="Submit">Start Game!</button>
+            <button class="btn btn-lg button" type="submit" id="gameStart" form="parameters" value="Submit">Start Game!</button>
           </div>
           <div class="" id="gamePause">
             <h2><span id="pause">15</span></h2>
