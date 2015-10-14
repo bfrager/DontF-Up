@@ -35,23 +35,36 @@ var $playAgain = $('#playAgain');
 
 // Game Object Constructor - Factory
 var Game = function(players, roundTime) {
-  return {
-    players: players || 4,
-    roundTimer: roundTime || 60,
-    pauseTimer: 15,
-    roundCounter: 0,
-    gameRounds: [],
-    newRound: function(){
-      return {
-        round: roundCounter,
-        content: null,
+  this.players = players || 4;
+  this.roundTimer = roundTime || 60;
+  this.pauseTimer = 15;
+  this.roundCounter = 0;
+  this.gameRounds = [];
+  this.newRound = function() {
+    this.round = roundCounter;
+    this.content = null;
+    this.roundIncrement = function() {
+      roundCounter++;
+      $('#roundCounter').text(roundCounter);
+      if (roundCounter === 1){
+          $('#previousRound').hide;
+          $textBox.hide();
+      } else if (roundCounter > $players) {
+          saveGame(this);
+          return (alert('Game Over!'));
+      } else if (roundCounter % 2 === 1) {
+          $textBox.hide();
+          showCanvas();
+      } else {
+          $textBox.show();
+          removeCanvas();
       }
-    },
-    saveRound: function(){
-      gameRounds.push(newRound);
-    },
-  }
-}
+    };
+    this.saveRound = function(){
+      this.gameRounds.push(this.newRound);
+    };
+};
+};
 
 // Game Functions
 $startButton.click(function(){
@@ -62,37 +75,6 @@ $startButton.click(function(){
   console.log(newGame);
 });
 
-// DEPCRECATED FUNCTIONS DURING OBJECT-ORIENTED REFACTORING
-// function newGame() {
-//   return Game()
-// }
-
-// //Game Round Functions
-// function newRound() {
-//   new GameRound;
-// }
-//
-// function saveGame(currentGame) {
-//   games.push(currentGame);
-// }
-
-function halfRound() {
-  roundCounter++;
-  $('#roundCounter').text(roundCounter);
-  if (roundCounter === 1){
-      $('#previousRound').hide;
-      $textBox.hide();
-  } else if (roundCounter > $players) {
-      saveGame(this);
-      return (alert('Game Over!'));
-  } else if (roundCounter % 2 === 1) {
-      $textBox.hide();
-      showCanvas();
-  } else {
-      $textBox.show();
-      removeCanvas();
-  }
-}
 
 // Toggle Canvas Functions:
 function removeCanvas() {
@@ -151,3 +133,36 @@ function endPause() {
 // Event Timers
 var countdownRound = window.setInterval(roundTimer, 1000);
 var countdownPause = window.setInterval(pauseTimer, 1000);
+
+
+// DEPCRECATED FUNCTIONS DURING OBJECT-ORIENTED REFACTORING
+// function newGame() {
+//   return Game()
+// }
+
+// //Game Round Functions
+// function newRound() {
+//   new GameRound;
+// }
+//
+// function saveGame(currentGame) {
+//   games.push(currentGame);
+// }
+//
+// function halfRound() {
+//   roundCounter++;
+//   $('#roundCounter').text(roundCounter);
+//   if (roundCounter === 1){
+//       $('#previousRound').hide;
+//       $textBox.hide();
+//   } else if (roundCounter > $players) {
+//       saveGame(this);
+//       return (alert('Game Over!'));
+//   } else if (roundCounter % 2 === 1) {
+//       $textBox.hide();
+//       showCanvas();
+//   } else {
+//       $textBox.show();
+//       removeCanvas();
+//   }
+// }
