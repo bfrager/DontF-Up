@@ -26,14 +26,14 @@ var $canvas = LC.init(($('.literally').get(0)),
                           LC.tools.Eyedropper]
                         });
 var $textBox = $('.textBox');
-var games = null;
+var games = [];
 var $startButton = $('#gameStart');
 var $share = $('#shareImages');
 var $playAgain = $('#playAgain');
+
 var countdownPause = null;
 var countdownRound = null;
-// var paused = false;
-
+var newGame = null;
 
 // Game Object Constructor - Factory
 var Game = function(players, roundTime) {
@@ -43,29 +43,38 @@ var Game = function(players, roundTime) {
   this.roundCounter = 0;
   this.gameRounds = [];
   this.newRound = function() {
-    this.round = roundCounter;
+    this.round = this.roundCounter;
     this.content = null;
-    this.roundIncrement = function() {
-      roundCounter++;
-      $('#roundCounter').text(roundCounter);
-      if (roundCounter === 1){
-          $('#previousRound').hide;
-          $textBox.hide();
-      } else if (roundCounter > $players) {
-          saveGame(this);
-          return (alert('Game Over!'));
-      } else if (roundCounter % 2 === 1) {
-          $textBox.hide();
-          showCanvas();
-      } else {
-          $textBox.show();
-          removeCanvas();
-      }
-    };
-    this.saveRound = function(){
-      this.gameRounds.push(this.newRound);
-    };
-};
+  };
+  this.roundIncrement = function() {
+    console.log("Round counter = "+ this.roundCounter)
+    this.roundCounter++;
+    console.log("Round", this.roundCounter);
+    $('#roundNum').text(this.roundCounter);
+    if (this.roundCounter === 1){
+      console.log("First round");
+      $('#previousRound').hide;
+      $textBox.hide();
+    } else if (this.roundCounter > this.players) {
+      console.log("No more rounds!");
+      saveGame(this);
+      console.log(games);
+      return (alert('Game Over!'));
+      endRound();
+      endPause();
+    } else if (this.roundCounter % 2 === 1) {
+      console.log("Drawing round!");
+      $textBox.hide();
+      showCanvas();
+    } else {
+      console.log("Writing round!");
+      $textBox.show();
+      removeCanvas();
+    }
+  };
+  this.saveRound = function(){
+    this.gameRounds.push(this.newRound);
+  };
 };
 
 // Game Functions
@@ -73,11 +82,16 @@ $startButton.submit(function(event){
   event.preventDefault();
   $players = $('#numPlayers').val();
   $roundTime = $('#roundLength').val();
-  var newGame = new Game($players, $roundTime);
+  newGame = new Game($players, $roundTime);
   console.log(newGame);
   $('#controls').show();
+  $('#timer').text(newGame.roundTimer);
+  startRound();
 });
 
+function saveGame(currentGame) {
+  games.push(currentGame);
+}
 
 // Toggle Canvas Functions:
 function removeCanvas() {
@@ -101,21 +115,23 @@ function saveDescription() {
   return $('#description').val();
 }
 
-
-// Timer Functions
-// var timer = function() {}; //TIMER OBJECT?
-
-
+//TIMER FUNCTIONS
 function roundTimer() {
-  var $timeRemaining = $('#timer').text() //replace with newGame.roundTime
+  if ($('#timer').text($timeRemaining) === newGame.roundTimer) {
+    var $timeRemaining = newGame.roundTimer;
+  }
+  else {
+    var $timeRemaining = $('#timer').text();
+  }
   $timeRemaining -= 1;
   console.log($timeRemaining);
   $('#timer').text($timeRemaining);
   if ($timeRemaining === 0) {
     console.log('ending round')
     endRound();
+    newGame.roundIncrement();
     pauseTimer();
-    $('#timer').text('60');
+    $('#timer').text(newGame.roundTimer);
     countdownPause = window.setInterval(pauseTimer, 1000);
   }
 }
@@ -146,7 +162,6 @@ function startRound(){
   countdownRound = window.setInterval(roundTimer, 1000);
 }
 
-startRound();
 
 // DEPCRECATED FUNCTIONS DURING OBJECT-ORIENTED REFACTORING
 // function newGame() {
@@ -158,9 +173,7 @@ startRound();
 //   new GameRound;
 // }
 //
-// function saveGame(currentGame) {
-//   games.push(currentGame);
-// }
+
 //
 // function halfRound() {
 //   roundCounter++;
