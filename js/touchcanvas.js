@@ -1,19 +1,5 @@
 // var DontFUp = DontFUp || {};
 
-// Canvas no jQuery:
-  // var canvas = LC.init(document.getElementsByClassName('literally')[0],
-  //                         {imageURLPrefix: 'img',
-  //                         tools: [
-  //                           LC.tools.Pencil,
-  //                           LC.tools.Eraser,
-  //                           LC.tools.Line,
-  //                           LC.tools.Rectangle,
-  //                           LC.tools.Polygon,
-  //                           LC.tools.Pan,
-  //                           LC.tools.Eyedropper]
-  //                         });
-
-// Canvas jQuery:
 var $canvas = LC.init(($('.literally').get(0)),
                         {imageURLPrefix: 'img',
                         tools: [
@@ -42,38 +28,41 @@ var Game = function(players, roundTime) {
   this.pauseTimer = 15;
   this.roundCounter = 0;
   this.gameRounds = [];
-  this.newRound = function() {
-    this.round = this.roundCounter;
-    this.content = null;
-  };
+  // this.newRound = function(content) {
+  //   this.round = this.roundCounter;
+  //   this.content = content;
+  // };
   this.roundIncrement = function() {
-    console.log("Round counter = "+ this.roundCounter)
     this.roundCounter++;
-    console.log("Round", this.roundCounter);
+    console.log("Round counter = "+ this.roundCounter)
     $('#roundNum').text(this.roundCounter);
     if (this.roundCounter === 1){
       console.log("First round");
+      $('#instructions').text('Draw Something! Draw Anything!');
       $('#previousRound').hide;
       $textBox.hide();
     } else if (this.roundCounter > this.players) {
       console.log("No more rounds!");
+      endRound();
+      endPause();
       saveGame(this);
       console.log(games);
       return (alert('Game Over!'));
-      endRound();
-      endPause();
     } else if (this.roundCounter % 2 === 1) {
       console.log("Drawing round!");
-      $textBox.hide();
-      showCanvas();
+      drawingRoundRearrange();
     } else {
       console.log("Writing round!");
-      $textBox.show();
-      removeCanvas();
+      writingRoundRearrange();
     }
   };
   this.saveRound = function(){
-    this.gameRounds.push(this.newRound);
+    // var roundObject = this.newRound(saveDescription() || saveCanvasToImage());
+    // console.log("Logging Round Object = ",roundObject,"to gameRounds array")
+    // this.gameRounds.push(roundObject);
+    var description = saveDescription();
+    var image = saveCanvasToImage()['image'];
+    this.gameRounds.push(image || description)
   };
 };
 
@@ -86,8 +75,21 @@ $startButton.submit(function(event){
   console.log(newGame);
   $('#controls').show();
   $('#timer').text(newGame.roundTimer);
+  newGame.roundIncrement();
   startRound();
 });
+
+function drawingRoundRearrange(){
+  $('#instructions').text('Draw Your Best Depiction of This Sentence :')
+  removeTextBox();
+  showCanvas();
+}
+
+function writingRoundRearrange(){
+  $('#instructions').text('Describe What You See (be thorough!) :')
+  $textBox.show();
+  removeCanvas();
+}
 
 function saveGame(currentGame) {
   games.push(currentGame);
@@ -106,13 +108,25 @@ function showCanvas() {
 // Export Canvas at End of Every Drawing Round
 function saveCanvasToImage() {
   var roundCanvas = $canvas.getSnapshot();
-  var roundImage = $canvas.getImage().toDataURL();
+  if ($canvas.getImage()) {
+    var roundImage = $canvas.getImage().toDataURL();
+  } else {
+    var roundImage = null;
+  }
   console.log(roundImage, roundCanvas);
-  return roundImage, roundCanvas;
+  return {
+    image: roundImage,
+    canvas: roundCanvas
+  };
 }
 
 function saveDescription() {
   return $('#description').val();
+}
+
+function removeTextBox() {
+  $('#description').val('');
+  $textBox.hide();
 }
 
 //TIMER FUNCTIONS
@@ -129,6 +143,8 @@ function roundTimer() {
   if ($timeRemaining === 0) {
     console.log('ending round')
     endRound();
+    newGame.saveRound();
+    console.log("Round saved to", newGame.gameRounds);
     newGame.roundIncrement();
     pauseTimer();
     $('#timer').text(newGame.roundTimer);

@@ -38,16 +38,14 @@
   </head>
 
   <body>
+    <header>
+      <h1>Don't F*** Up!</h1>
+    </header>
+    <div class="overlay" id="overlay-background"></div>
     <div class="container-fluid" id="container">
-      <header>
-        <h1>Don't F*** Up!</h1>
-      </header>
-
       <div id="game">
-        <div id="instructions">
-          <h2>Draw Something! Draw Anything!</h2>
-        </div>
-        <div id="previousRound">
+        <h2 id="instructions"></h2>
+        <div id="previous-round">
         </div>
         <div id="currentRound">
           <div class="literally" id="canvas-container">
@@ -63,8 +61,8 @@
           <h2>Round <span id="roundNum">1</span></h2>
           <h3>(<span id="remaining">X</span> Rounds Remaining)</h3>
         </div>
-        <div id="overlaysContainer">
-          <div class="" id="gameStart">
+        <div id="overlays-container">
+          <div class="overlay overlay-element" id="gameStart">
             <form id="parameters">
               <div class="form-group">
                 <h2>Number of Players:</h2>
@@ -78,22 +76,22 @@
             </form>
             <button class="btn btn-lg button" type="submit" id="gameStart" form="parameters" value="Submit">Start Game!</button>
           </div>
-          <div class="" id="gamePause">
-            <h2><span id="pause">15</span></h2>
+          <div class="overlay overlay-element" id="gamePause">
+            <h2><span id="pause">5</span></h2>
             <h2>Please pass the device to your right</h2>
           </div>
-          <div class="overlay" id="gameEnd">
+          <div class="overlay overlay-element" id="gameEnd">
             <button class="btn btn-lg button" id="playAgain">Play Again!</button>
             <button class="btn btn-lg button" id="shareImages">Share Images</button>
           </div>
         </div>
-        <div id="shelf">
-        </div>
       </div>
-      <footer>
-        <a href="https://github.com/bfrager/DontF-Up"><i class="fa fa-github fa-3x"></i></a>
-      </footer>
     </div>
+    <div id="shelf">
+    </div>
+    <footer>
+      <a href="https://github.com/bfrager/DontF-Up"><i class="fa fa-github fa-3x"></i></a>
+    </footer>
     <!-- Custom JS -->
     <script src="js/touchcanvas.js" charset="utf-8"></script>
   </body>
