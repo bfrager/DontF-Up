@@ -50,10 +50,10 @@ var Game = function(players, roundTime) {
       return (alert('Game Over!'));
     } else if (this.roundCounter % 2 === 1) {
       console.log("Drawing round!");
-      drawingRoundRearrange();
+      drawingRoundRearrange(this.gameRounds[-1]);
     } else {
       console.log("Writing round!");
-      writingRoundRearrange();
+      writingRoundRearrange(this.gameRounds[-1]);
     }
   };
   this.saveRound = function(){
@@ -79,14 +79,16 @@ $startButton.submit(function(event){
   startRound();
 });
 
-function drawingRoundRearrange(){
-  $('#instructions').text('Draw Your Best Depiction of This Sentence :')
+function drawingRoundRearrange(lastDescription){
+  $('#instructions').text('Draw Your Best Depiction of This Sentence :');
+  $('#previousRound').html("<h4 id='lastDescription'>"+lastDescription+"</h4>");
   removeTextBox();
   showCanvas();
 }
 
-function writingRoundRearrange(){
-  $('#instructions').text('Describe What You See (be thorough!) :')
+function writingRoundRearrange(lastDrawing){
+  $('#instructions').text('Describe What You See (be thorough!) :');
+  $('#previousRound').html("<img id='lastDrawing' src='"+lastDrawing+"'>");
   $textBox.show();
   removeCanvas();
 }
