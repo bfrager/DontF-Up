@@ -33,21 +33,27 @@ header {
   display:none;
 }
 
+#overlays-container {
+  position: fixed;
+  width: 90%;
+  height: 90%;
+  top: 5%;
+  left: 5%;
+  background-color: rgba(0, 0, 0, .8);;
+  border-style: solid;
+  border-width: 5px;
+  border-color: #4ECDC4;
+  border-radius: 15px;
+  text-align: center;
+  z-index: 11;
+  padding: 10px;
+  overflow: auto;
+}
+
 .overlay-element {
-    width: 90%;
-    height: 80%;
-    /*line-height: 200px;*/
-    position: fixed;
-    top: 15%;
-    left: 5%;
-    background-color: rgba(0, 0, 0, .8);;
-    border-style: solid;
-    border-width: 5px;
-    border-color: #4ECDC4;
-    border-radius: 15px;
-    text-align: center;
-    z-index: 11;
-    padding: 10px;
+  position: relative;
+  /*top: 50%;
+  transform: translateY(-50%);*/
 }
 
 #overlay-background {
@@ -69,16 +75,12 @@ header {
   position: relative;
 }
 
-#overlays-container {
-  position: absolute;
-}
-
-.hide {
-  display:none;
-}
-
-.canvas-container {
-
+#result-container {
+  background-color: rgba(255, 255, 255, 0.95);
+  border-radius: 10px;
+  border-style: solid;
+  border-width: 2px;
+  border-color: #C7F464;
 }
 
 canvas {
@@ -93,6 +95,13 @@ h1 {
 h2 {
   font-weight: 700;
   color: #C7F464;
+}
+
+h4 {
+  font-family: 'Gloria Hallelujah', cursive;
+  font-size: 60px;
+  font-weight: 700;
+  color:#FF6B6B;
 }
 
 p {
@@ -146,7 +155,6 @@ footer {
 input {
   border-radius: 5px;
   font-size: 30px;
-  line-height: 60px;
   border-style: none solid solid none;
   display:inline;
   width: 100px;

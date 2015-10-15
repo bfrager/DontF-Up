@@ -22,6 +22,7 @@ var countdownRound = null;
 var newGame = null;
 
 $('#gameStart').show();
+$('#overlays-container').show();
 $('#overlay-background').show();
 
 // Game Object Constructor - Factory
@@ -71,6 +72,7 @@ $startButton.submit(function(event){
   newGame = new Game($players, $roundTime);
   console.log(newGame);
   $('#gameStart').hide();
+  $('#overlays-container').hide();
   $('#overlay-background').hide();
   $textBox.hide();
   $('#controls').show();
@@ -97,11 +99,13 @@ function pauseWindowLoad() {
   pauseTimer();
   countdownPause = window.setInterval(pauseTimer, 1000);
   $('#gamePause').show();
+  $('#overlays-container').show();
   $('#overlay-background').show();
 }
 
 function pauseWindowClear() {
   $('#gamePause').hide();
+  $('#overlays-container').hide();
   $('#overlay-background').hide();
   endPause();
 }
@@ -120,6 +124,11 @@ function showCanvas() {
   $('#canvas-container').show();
 }
 
+function removeTextBox() {
+  $('#description').val('');
+  $textBox.hide();
+}
+
 // Export Canvas at End of Every Drawing Round
 function saveCanvasToImage() {
   var roundCanvas = $canvas.getSnapshot();
@@ -136,14 +145,25 @@ function saveCanvasToImage() {
   return roundImage;
 }
 
+// Build images from gameRounds array
+function roundsToImage(current) {
+  // $('#result-container').html('<canvas id="gameResult" width="300" height="225"></canvas>');
+  $.each(current.gameRounds, function( index, value ) {
+    console.log("at index", index, "value = ", value);
+    if (index % 2 === 0) {
+      $('#result-container').append('<div class="snapshot" id="round'+(index+1)+'">'+'<img src="'+value+'">'+'</div>');
+    } else if (index % 2 === 1) {
+      $('#result-container').append('<div class="snapshot" id="round'+(index+1)+'">'+'<h4>'+value+'</h4>'+'</div>');
+    }
+  });
+  // for (i=0;i<game.gameRounds.length;i++) {
+  //   game.gameRounds
+  // }
+}
+
 // Save Description at end of every writing round
 function saveDescription() {
   return $('#description').val();
-}
-
-function removeTextBox() {
-  $('#description').val('');
-  $textBox.hide();
 }
 
 //TIMER FUNCTIONS
@@ -167,7 +187,9 @@ function roundTimer() {
       endRound();
       endPause();
       saveGame(newGame);
+      roundsToImage(newGame);
       $('#gameEnd').show();
+      $('#overlays-container').show();
       $('#overlay-background').show();
       console.log(games);
     } else {
