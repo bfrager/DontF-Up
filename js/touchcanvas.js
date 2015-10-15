@@ -50,10 +50,10 @@ var Game = function(players, roundTime) {
       return (alert('Game Over!'));
     } else if (this.roundCounter % 2 === 1) {
       console.log("Drawing round!");
-      drawingRoundRearrange(this.gameRounds[-1]);
+      drawingRoundRearrange(this.gameRounds[(this.gameRounds.length-1)]);
     } else {
       console.log("Writing round!");
-      writingRoundRearrange(this.gameRounds[-1]);
+      writingRoundRearrange(this.gameRounds[(this.gameRounds.length-1)]);
     }
   };
   this.saveRound = function(){
@@ -61,8 +61,8 @@ var Game = function(players, roundTime) {
     // console.log("Logging Round Object = ",roundObject,"to gameRounds array")
     // this.gameRounds.push(roundObject);
     var description = saveDescription();
-    var image = saveCanvasToImage()['image'];
-    this.gameRounds.push(image || description)
+    var image = saveCanvasToImage();
+    this.gameRounds.push(image || description);
   };
 };
 
@@ -116,10 +116,11 @@ function saveCanvasToImage() {
     var roundImage = null;
   }
   console.log(roundImage, roundCanvas);
-  return {
-    image: roundImage,
-    canvas: roundCanvas
-  };
+  // return {
+  //   image: roundImage,
+  //   canvas: roundCanvas
+  // };
+  return roundImage;
 }
 
 function saveDescription() {
