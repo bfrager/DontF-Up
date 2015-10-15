@@ -24,24 +24,30 @@ body {
   position:relative;
 }
 
-/*.overlay{
-  display:none;
-}*/
+header {
+  margin-top:0px;
+  padding-top: 10px;
+}
 
-/*.overlay-element {
+.overlay{
+  display:none;
+}
+
+.overlay-element {
     width: 90%;
-    height: 90%;
-    line-height: 200px;
+    height: 80%;
+    /*line-height: 200px;*/
     position: fixed;
-    top: 5%;
+    top: 15%;
     left: 5%;
-    background-color: rgba(255, 255, 255, .25);;
+    background-color: rgba(0, 0, 0, .8);;
     border-style: solid;
     border-width: 5px;
     border-color: #4ECDC4;
     border-radius: 15px;
     text-align: center;
     z-index: 11;
+    padding: 10px;
 }
 
 #overlay-background {
@@ -52,7 +58,7 @@ body {
   height: 100%;
   z-index: 10;
   background-color: rgba(0,0,0,0.5);
-}*/
+}
 
 #container {
   max-width: 960px;
@@ -63,9 +69,13 @@ body {
   position: relative;
 }
 
-/*#overlays-container {
+#overlays-container {
   position: absolute;
-}*/
+}
+
+.hide {
+  display:none;
+}
 
 .canvas-container {
 
@@ -85,6 +95,11 @@ h2 {
   color: #C7F464;
 }
 
+p {
+  font-size:20px;
+  line-height: 24px;
+}
+
 span {
   color: #FF6B6B;
 }
@@ -92,6 +107,7 @@ span {
 button {
   font-weight: 700;
   color: #C7F464;
+  background-color: #556270;
 }
 
 textarea {
@@ -130,6 +146,7 @@ footer {
 input {
   border-radius: 5px;
   font-size: 30px;
+  line-height: 60px;
   border-style: none solid solid none;
   display:inline;
   width: 100px;
