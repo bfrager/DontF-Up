@@ -21,9 +21,7 @@ var countdownPause = null;
 var countdownRound = null;
 var newGame = null;
 
-$('#gameStart').show();
-$('#overlays-container').show();
-$('#overlay-background').show();
+resetGame();
 
 // Game Object Constructor - Factory
 var Game = function(players, roundTime) {
@@ -64,7 +62,7 @@ var Game = function(players, roundTime) {
   };
 };
 
-// Game Functions
+// Event Listeners
 $startButton.submit(function(event){
   event.preventDefault();
   $players = $('#numPlayers').val();
@@ -76,10 +74,26 @@ $startButton.submit(function(event){
   $('#overlay-background').hide();
   $textBox.hide();
   $('#controls').show();
+  scrollToDescription();
   $('#timer').text(newGame.roundTimer);
   newGame.roundIncrement();
   startRound();
 });
+
+$('#playAgain').click(function() {
+  resetGame()
+});
+
+// Game Functions
+function resetGame() {
+  $('#gameStart').show();
+  $('#overlays-container').show();
+  $('#overlay-background').show();
+  $('#controls').hide();
+  $('#gameEnd').hide();
+  $('#result-container').empty();
+  $(document).scrollTop(0);
+}
 
 function drawingRoundRearrange(lastDescription){
   $('#instructions').text('Draw Your Best Depiction of This Sentence :');
@@ -92,6 +106,7 @@ function writingRoundRearrange(lastDrawing){
   $('#instructions').text('Describe What You See (be thorough!) :');
   $('#previousRound').html("<img id='lastDrawing' src='"+lastDrawing+"'>");
   $textBox.show();
+  $('#description').focus();
   removeCanvas();
 }
 
@@ -108,6 +123,7 @@ function pauseWindowClear() {
   $('#overlays-container').hide();
   $('#overlay-background').hide();
   endPause();
+  scrollToDescription();
 }
 
 function saveGame(currentGame) {
@@ -127,6 +143,14 @@ function showCanvas() {
 function removeTextBox() {
   $('#description').val('');
   $textBox.hide();
+}
+
+function scrollToDescription() {
+  $(document).scrollTop( $("#game").offset().top );
+}
+
+function scrollToOverlay() {
+  $(document).scrollTop( $("#overlays-container").offset().top );
 }
 
 // Export Canvas at End of Every Drawing Round
@@ -177,6 +201,7 @@ function roundTimer() {
   $timeRemaining -= 1;
   console.log($timeRemaining);
   $('#timer').text($timeRemaining);
+  scrollToOverlay();
   if ($timeRemaining === 0) {
     console.log('ending round')
     endRound();

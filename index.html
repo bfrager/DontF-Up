@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
     <title>Don't F*** Up!</title>
 
     <!-- Google Fonts -->
@@ -56,48 +56,48 @@
         </div>
         <div id="controls">
           <div id="countdown">
-            <h2><span id="timer">5</span> seconds left!</h2>
+            <h2><span class="bigNum" id="timer">5</span> seconds left!</h2>
           </div>
           <h2>Round <span id="roundNum">1</span> / <span id="remaining">X</span></h2>
         </div>
       </div>
       <div id="overlays-container">
         <div class="overlay overlay-element" id="gameStart">
-          <h2>Welcome to Don't F*** Up! (don't be that one...)</h2>
+          <h2>Welcome to Don't F*** Up!</h2>
           <h3>a.k.a. Telephone Pictionary</h3>
-          <p>A group game of pure imagination that alternates between drawing a picture and writing
-             a description of it... to tragic and hilarious results.</p>
+          <p>A group game of pure imagination that alternates between <span>drawing</span> a picture and <span>writing</span>
+             what you see... to tragic and hilarious results.</p>
           <h3>
             Please enter:
           </h3>
           <form id="parameters">
             <div class="form-group">
               <h2>Number of Players:</h2>
-              <input type="number" id="numPlayers" min="1">
+              <input type="number" id="numPlayers" min="1" placeholder="urrbody">
             </div>
             <div class="form-group">
               <h2>Round Length:</h2>
-              <input type="number"  id="roundLength" min="0">
-              <h3>seconds</h3>
+              <input type="number"  id="roundLength" min="0" placeholder="seconds">
             </div>
           </form>
           <button class="btn btn-lg button" type="submit" id="gameStart" form="parameters" value="Submit">Start Game!</button>
         </div>
         <div class="overlay overlay-element" id="gamePause">
-          <h2><span id="pause">5</span></h2>
           <h2>Please pass the device to your right</h2>
           <h3>(don't worry, it's coming back around to you...)</h3>
+          <h2>New round starts in:</h2>
+          <h2><span class="bigNum" id="pause">10</span></h2>
         </div>
         <div class="overlay overlay-element" id="gameEnd">
           <h2>That's a Wrap!</h2>
           <h3>Scope the damage:</h3>
           <div id="result-container"></div>
           <button class="btn btn-lg button" id="playAgain">Play Again!</button>
-          <button class="btn btn-lg button" id="shareGame">Share Game</button>
+          <button class="btn btn-lg button disabled" id="shareGame">Share Game (coming soon)</button>
         </div>
       </div>
     </div>
-    <div id="shelf">
+    <div class="overlay" id="shelf">
     </div>
     <footer>
       <a href="https://github.com/bfrager/DontF-Up"><i class="fa fa-github fa-3x"></i></a>
