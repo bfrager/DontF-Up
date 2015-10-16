@@ -36,7 +36,6 @@
     <!-- Literally Canvas -->
     <script src="js/literallycanvas.js"></script>
   </head>
-
   <body>
     <header>
       <h1>Don't F*** Up!</h1>
@@ -73,7 +72,7 @@
           <form id="parameters">
             <div class="form-group">
               <h2>Number of Players:</h2>
-              <input type="number" id="numPlayers" min="1" placeholder="urrbody">
+              <input type="number" id="numPlayers" min="1">
             </div>
             <div class="form-group">
               <h2>Round Length:</h2>
@@ -84,16 +83,16 @@
         </div>
         <div class="overlay overlay-element" id="gamePause">
           <h2>Please pass the device to your right</h2>
-          <h3>(don't worry, it's coming back around to you...)</h3>
+          <h3>(don't worry, it'll come back around to you... eventually)</h3>
           <h2>New round starts in:</h2>
           <h2><span class="bigNum" id="pause">10</span></h2>
         </div>
         <div class="overlay overlay-element" id="gameEnd">
           <h2>That's a Wrap!</h2>
-          <h3>Scope the damage:</h3>
+          <h3>How'd it hold up?</h3>
           <div id="result-container"></div>
           <button class="btn btn-lg button" id="playAgain">Play Again!</button>
-          <button class="btn btn-lg button disabled" id="shareGame">Share Game (coming soon)</button>
+          <button class="btn btn-lg button disabled" id="shareGame">Share Game</button>
         </div>
       </div>
     </div>

@@ -56,9 +56,13 @@ var Game = function(players, roundTime) {
     // var roundObject = this.newRound(saveDescription() || saveCanvasToImage());
     // console.log("Logging Round Object = ",roundObject,"to gameRounds array")
     // this.gameRounds.push(roundObject);
-    var description = saveDescription();
-    var image = saveCanvasToImage();
-    this.gameRounds.push(image || description);
+    var content = null;
+    if (this.roundCounter % 2 === 1) {
+      var content = saveCanvasToImage();
+    } else if (this.roundCounter % 2 === 0) {
+      var content = saveDescription();
+    }
+    this.gameRounds.push(content);
   };
 };
 
@@ -92,6 +96,8 @@ function resetGame() {
   $('#controls').hide();
   $('#gameEnd').hide();
   $('#result-container').empty();
+  $('#previousRound').html('');
+  $canvas.clear();
   $(document).scrollTop(0);
 }
 
@@ -137,6 +143,7 @@ function removeCanvas() {
 }
 
 function showCanvas() {
+  $canvas.clear();
   $('#canvas-container').show();
 }
 
@@ -254,33 +261,3 @@ function startPause(){
 function endPause() {
   window.clearInterval(countdownPause);
 }
-
-// DEPCRECATED FUNCTIONS DURING OBJECT-ORIENTED REFACTORING
-// function newGame() {
-//   return Game()
-// }
-
-// //Game Round Functions
-// function newRound() {
-//   new GameRound;
-// }
-//
-
-//
-// function halfRound() {
-//   roundCounter++;
-//   $('#roundCounter').text(roundCounter);
-//   if (roundCounter === 1){
-//       $('#previousRound').hide;
-//       $textBox.hide();
-//   } else if (roundCounter > $players) {
-//       saveGame(this);
-//       return (alert('Game Over!'));
-//   } else if (roundCounter % 2 === 1) {
-//       $textBox.hide();
-//       showCanvas();
-//   } else {
-//       $textBox.show();
-//       removeCanvas();
-//   }
-// }
